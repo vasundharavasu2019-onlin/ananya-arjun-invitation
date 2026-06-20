@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Ananya & Arjun | Eternal Vows</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8D48B;
+      --maroon: #7B2D3E;
+      --deep-maroon: #4A1624;
+      --ivory: #FDF8F0;
+      --cream: #FFF5E8;
+      --saffron: #E8A650;
+      --rose-gold: #C4916E;
+      --temple-red: #9B2D30;
+      --text-dark: #3D2B1F;
+      --text-medium: #6B5040;
+      --glass-bg: rgba(255, 248, 240, 0.7);
+      --glass-border: rgba(201, 168, 76, 0.45);
+      --header-bg: rgba(253, 248, 240, 0.85);
+      --footer-bg: #4A1624;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--ivory);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+      background-image:
+        radial-gradient(ellipse at 25% 20%, rgba(201, 168, 76, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 75% 60%, rgba(123, 45, 62, 0.03) 0%, transparent 50%);
+    }
+
+    h1, h2, h3, h4, .serif {
+      font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    .sanskrit {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Canvas layers */
+    #petals-canvas, #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+    #petals-canvas {
+      z-index: 11;
+    }
+
+    /* ──────────────── HEADER ──────────────── */
+    .luxury-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--header-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.35);
+      padding: 0.7rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.4s ease;
+    }
+    .header-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem;
+      font-weight: 600;
+      color: var(--deep-maroon);
+      letter-spacing: 3px;
+    }
+    .header-logo span {
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-medium);
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    .mobile-menu-btn {
+      display: none;
+      font-size: 1.5rem;
+      color: var(--deep-maroon);
+      cursor: pointer;
+    }
+
+    /* ──────────────── BUTTONS ──────────────── */
+    .btn-gold {
+      background: linear-gradient(145deg, #D4AF37, #B8922E);
+      border: none;
+      color: #1A1008;
+      font-weight: 600;
+      padding: 0.85rem 2.2rem;
+      border-radius: 3rem;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(180, 135, 40, 0.4);
+      transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+      font-size: 0.9rem;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .btn-gold:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 22px 35px rgba(200, 155, 45, 0.6);
+      background: linear-gradient(145deg, #E0BC4A, #C9A034);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: #fff;
+      box-shadow: none;
+    }
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: #fff;
+    }
+
+    /* ──────────────── GLASS CARD ──────────────── */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.8rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+      transition: all 0.4s ease;
+    }
+    .glass-card:hover {
+      box-shadow: 0 28px 50px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    }
+
+    /* ──────────────── GOLD FOIL TEXT ──────────────── */
+    .gold-foil {
+      background: linear-gradient(135deg, #B8922E 0%, #F0DA7B 25%, #D4AF37 50%, #FEF0B8 75%, #B08828 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    /* ──────────────── HERO ──────────────── */
+    .hero-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: linear-gradient(160deg, #1F0F14 0%, #3D1F28 40%, #1A0D12 100%);
+      overflow: hidden;
+    }
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 35%;
+      opacity: 0.5;
+      filter: brightness(0.85) contrast(1.05) saturate(0.9);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 15%, rgba(15, 5, 8, 0.75) 85%);
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 20;
+      text-align: center;
+      color: #FFF;
+      padding: 2rem;
+      max-width: 950px;
+      width: 100%;
+      animation: fadeUpEntrance 1.4s ease-out;
+    }
+    @keyframes fadeUpEntrance {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .hero-names {
+      font-size: clamp(3.8rem, 9vw, 7.5rem);
+      font-weight: 600;
+      line-height: 1.05;
+      text-shadow: 0 0 40px rgba(201, 168, 76, 0.5);
+    }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      margin: 2.2rem 0 1.8rem;
+    }
+    .count-item {
+      background: rgba(20, 10, 12, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(201, 168, 76, 0.65);
+      border-radius: 1.6rem;
+      padding: 1rem 1.8rem;
+      min-width: 85px;
+      text-align: center;
+    }
+    .count-item span {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      display: block;
+    }
+    .count-item small {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #E8D5C0;
+    }
+
+    /* ──────────────── SECTIONS ──────────────── */
+    section {
+      padding: 5.5rem 2rem;
+      position: relative;
+      z-index: 15;
+    }
+    .section-title {
+      font-size: 2.8rem;
+      text-align: center;
+      margin-bottom: 3.5rem;
+      color: var(--deep-maroon);
+      position: relative;
+      font-weight: 600;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 3px;
+      background: var(--gold);
+      margin: 1rem auto 0;
+      border-radius: 2px;
+    }
+    .section-subtitle {
+      text-align: center;
+      color: var(--text-medium);
+      font-style: italic;
+      margin-top: -2rem;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+
+    /* ──────────────── LOVE STORY ──────────────── */
+    .timeline-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+    .timeline-item.reverse {
+      flex-direction: row-reverse;
+    }
+    .timeline-img-wrapper {
+      flex-shrink: 0;
+    }
+    .timeline-img {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid var(--gold);
+      box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+      transition: transform 0.4s ease;
+    }
+    .timeline-img:hover {
+      transform: scale(1.06);
+    }
+    .timeline-content h3 {
+      font-size: 1.8rem;
+      color: var(--maroon);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-content p {
+      color: var(--text-medium);
+      font-size: 1.05rem;
+    }
+    .timeline-date {
+      display: inline-block;
+      background: var(--gold);
+      color: #1A1008;
+      padding: 0.3rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-top: 0.6rem;
+    }
+
+    /* ──────────────── EVENTS GRID ──────────────── */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .event-card {
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.4s;
+      cursor: pointer;
+    }
+    .event-card:hover {
+      transform: translateY(-14px) scale(1.02);
+      box-shadow: 0 35px 55px rgba(160, 100, 30, 0.25);
+    }
+    .event-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 1.2rem 1.2rem 0 0;
+    }
+    .event-card-body {
+      padding: 1.5rem;
+    }
+    .event-card-body h3 {
+      font-size: 1.6rem;
+      color: var(--maroon);
+    }
+    .event-meta {
+      color: var(--text-medium);
+      font-size: 0.9rem;
+      margin: 0.4rem 0;
+    }
+    .dress-code {
+      background: #FDF3E5;
+      color: #8B5A2B;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    /* ──────────────── RSVP ──────────────── */
+    .rsvp-form {
+      display: grid;
+      gap: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .rsvp-form input, .rsvp-form select, .rsvp-form textarea {
+      padding: 0.9rem 1.3rem;
+      border-radius: 2.5rem;
+      border: 1px solid rgba(201, 168, 76, 0.5);
+      background: rgba(255, 250, 240, 0.8);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: 0.3s;
+    }
+    .rsvp-form input:focus, .rsvp-form select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15);
+    }
+    #rsvpSuccess {
+      display: none;
+      text-align: center;
+      font-weight: 600;
+      color: #2D6A4F;
+      margin-top: 1.2rem;
+      font-size: 1.1rem;
+      animation: fadeUp 0.5s ease;
+    }
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ──────────────── GALLERY ──────────────── */
+    .gallery-masonry {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 1.2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .gallery-masonry img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 1.5rem;
+      transition: transform 0.45s ease, filter 0.45s;
+      cursor: pointer;
+    }
+    .gallery-masonry img:hover {
+      transform: scale(1.06);
+      filter: brightness(1.08);
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ──────────────── FOOTER ──────────────── */
+    .luxury-footer {
+      background: var(--footer-bg);
+      color: #F5E7D8;
+      padding: 3.5rem 2rem 2rem;
+      text-align: center;
+      border-top: 5px solid var(--gold);
+      position: relative;
+      z-index: 20;
+    }
+    .footer-names {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--gold-light);
+      font-weight: 600;
+      letter-spacing: 2px;
+    }
+    .footer-venue {
+      font-size: 1.1rem;
+      color: #E0C9B0;
+      margin: 0.3rem 0 1.2rem;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+      font-size: 1.3rem;
+    }
+    .footer-social a {
+      color: #E8D5C0;
+      transition: color 0.3s;
+    }
+    .footer-social a:hover {
+      color: var(--gold);
+    }
+    .footer-bottom {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 1.5rem;
+    }
+
+    /* ──────────────── RESPONSIVE ──────────────── */
+    @media (max-width: 768px) {
+      .luxury-header {
+        padding: 0.7rem 1.5rem;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--header-bg);
+        padding: 1.5rem;
+        gap: 1.2rem;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+      .timeline-item, .timeline-item.reverse {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-names {
+        font-size: 3.2rem;
+      }
+      section {
+        padding: 3.5rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Petals & Particles -->
+  <canvas id="petals-canvas"></canvas>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="luxury-header" id="header">
+    <div class="header-logo">A<span>&</span>A</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#invitation">Invitation</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#rsvp">RSVP</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#venue">Venue</a></li>
+    </ul>
+    <div class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+  </header>
+
+  <!-- ═══════════════ HERO ═══════════════ -->
+  <section class="hero-section" id="home">
+    <div class="hero-bg-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="sanskrit" style="font-size:1.4rem; color:#F0DA7B; letter-spacing:5px; margin-bottom:0.5rem;">॥ ॐ श्री गणेशाय नमः ॥</p>
+      <h1 class="hero-names gold-foil">Ananya <span style="font-size:2.5rem; -webkit-text-fill-color: #FFF;">&</span> Arjun</h1>
+      <p style="font-size:1.3rem; font-style:italic; color:#F5E7D8; margin:0.8rem 0;">Together with our families, we invite you to celebrate our wedding</p>
+      <div class="countdown-grid" id="countdown">
+        <div class="count-item"><span id="days">00</span><small>Days</small></div>
+        <div class="count-item"><span id="hours">00</span><small>Hours</small></div>
+        <div class="count-item"><span id="minutes">00</span><small>Minutes</small></div>
+        <div class="count-item"><span id="seconds">00</span><small>Seconds</small></div>
+      </div>
+      <p style="font-size:1.5rem; font-weight:500; margin:1rem 0;"><i class="fas fa-map-marker-alt" style="color:#D4AF37;"></i> Taj Falaknuma Palace, Hyderabad</p>
+      <p style="font-size:1.8rem; font-weight:600; color:#F0DA7B;">12 February 2027</p>
+      <div style="display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap; margin-top:2.2rem;">
+        <a href="#rsvp" class="btn-gold">RSVP Now</a>
+        <a href="#events" class="btn-gold btn-outline">View Events</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ OUR LOVE STORY ═══════════════ -->
+  <section id="story">
+    <h2 class="section-title">Our Eternal Journey</h2>
+    <p class="section-subtitle">A story written in the stars</p>
+    <div class="timeline-container">
+      <div class="timeline-item">
+        <div class="timeline-img-wrapper"><img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=500" alt="First Meeting" class="timeline-img"></div>
+        <div class="timeline-content"><h3>Where It All Began</h3><p>A chance meeting at a family wedding turned into a lifelong journey of togetherness.</p><span class="timeline-date">March 2019</span></div>
+      </div>
+      <div class="timeline-item reverse">
+        <div class="timeline-img-wrapper"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=500" alt="First Date" class="timeline-img"></div>
+        <div class="timeline-content"><h3>Coffee & Conversations</h3><p>Hours felt like minutes. We knew this was something extraordinary.</p><span class="timeline-date">June 2019</span></div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-img-wrapper"><img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=500" alt="Proposal" class="timeline-img"></div>
+        <div class="timeline-content"><h3>The Magical Yes</h3><p>A sunset proposal by the lake, surrounded by flowers and emotions.</p><span class="timeline-date">December 2025</span></div>
+      </div>
+      <div class="timeline-item reverse">
+        <div class="timeline-img-wrapper"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=500" alt="Engagement" class="timeline-img"></div>
+        <div class="timeline-content"><h3>Rings & Promises</h3><p>Two families united in celebration, love, and blessing.</p><span class="timeline-date">August 2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ DIGITAL INVITATION ═══════════════ -->
+  <section id="invitation" style="background: linear-gradient(180deg, #FDF8F0 0%, #F9F0E3 100%);">
+    <div class="glass-card" style="max-width:700px; margin:0 auto; padding:3rem 2rem; text-align:center;">
+      <h2 class="gold-foil" style="font-size:2.4rem; margin-bottom:0.5rem;">Digital Invitation</h2>
+      <p style="font-style:italic; color:var(--text-medium);">Traditional Hindu Wedding Card</p>
+      <div style="margin:2.5rem 0; padding:2.5rem 2rem; border:3px double #D4AF37; border-radius:2.5rem; background: rgba(255,250,240,0.5);">
+        <p style="font-size:1.2rem;">With the divine blessings of Lord Ganesha,</p>
+        <p class="gold-foil" style="font-size:2.5rem; margin:0.6rem 0;">Ananya & Arjun</p>
+        <p>request the honor of your presence<br>as they begin their sacred journey together</p>
+      </div>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <button class="btn-gold"><i class="fas fa-download"></i> Download PDF</button>
+        <button class="btn-gold" style="background:#25D366; box-shadow:0 10px 20px rgba(37,211,102,0.3);"><i class="fab fa-whatsapp"></i> Share</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WEDDING EVENTS ═══════════════ -->
+  <section id="events">
+    <h2 class="section-title">Sacred Celebrations</h2>
+    <div class="events-grid">
+      <div class="glass-card event-card"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=500" alt="Haldi"><div class="event-card-body"><h3>Haldi Ceremony</h3><p class="event-meta"><i class="far fa-calendar"></i> 10 Feb 2027 · 9:00 AM</p><span class="dress-code">Yellow Attire</span></div></div>
+      <div class="glass-card event-card"><img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=500" alt="Mehendi"><div class="event-card-body"><h3>Mehendi Ceremony</h3><p class="event-meta"><i class="far fa-calendar"></i> 10 Feb 2027 · 4:00 PM</p><span class="dress-code">Green & Gold</span></div></div>
+      <div class="glass-card event-card"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=500" alt="Sangeet"><div class="event-card-body"><h3>Sangeet Night</h3><p class="event-meta"><i class="far fa-calendar"></i> 11 Feb 2027 · 7:00 PM</p><span class="dress-code">Royal Indigo</span></div></div>
+      <div class="glass-card event-card"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=500" alt="Wedding"><div class="event-card-body"><h3>Wedding Ceremony</h3><p class="event-meta"><i class="far fa-calendar"></i> 12 Feb 2027 · 10:00 AM</p><span class="dress-code">Traditional Red</span></div></div>
+      <div class="glass-card event-card"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=500" alt="Reception"><div class="event-card-body"><h3>Reception</h3><p class="event-meta"><i class="far fa-calendar"></i> 12 Feb 2027 · 7:00 PM</p><span class="dress-code">Black Tie</span></div></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RSVP ═══════════════ -->
+  <section id="rsvp" style="background: #FBF5EC;">
+    <div class="glass-card" style="max-width:650px; margin:0 auto; padding:3rem 2.5rem;">
+      <h2 class="section-title" style="margin-bottom:2rem;">Gracious RSVP</h2>
+      <form id="rsvpForm" class="rsvp-form">
+        <input type="text" placeholder="Full Name *" required>
+        <input type="tel" placeholder="Mobile Number">
+        <input type="email" placeholder="Email Address">
+        <select><option>Select Event</option><option>All Events</option><option>Haldi</option><option>Mehendi</option><option>Sangeet</option><option>Wedding</option><option>Reception</option></select>
+        <select><option>Attendance</option><option>Will Attend</option><option>Regretfully Decline</option></select>
+        <input type="text" placeholder="Meal Preference (Veg / Non-Veg)">
+        <textarea rows="2" placeholder="Message or Blessings..."></textarea>
+        <button type="submit" class="btn-gold" style="width:100%;">Send Blessings ✨</button>
+      </form>
+      <div id="rsvpSuccess">🎉 Thank you! Your presence is the greatest gift.</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ VENUE ═══════════════ -->
+  <section id="venue">
+    <h2 class="section-title">The Royal Venue</h2>
+    <div class="glass-card" style="max-width:900px; margin:0 auto; overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200" style="width:100%; height:350px; object-fit:cover;" alt="Taj Falaknuma Palace">
+      <div style="padding:2rem; text-align:center;">
+        <h3 style="font-size:1.8rem; color:var(--maroon);">Taj Falaknuma Palace</h3>
+        <p style="color:var(--text-medium);">Engine Bowli, Falaknuma, Hyderabad, Telangana 500053</p>
+        <a href="#" class="btn-gold" style="margin-top:1rem;"><i class="fas fa-directions"></i> Get Directions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PHOTO GALLERY ═══════════════ -->
+  <section id="gallery">
+    <h2 class="section-title">Cherished Moments</h2>
+    <div class="gallery-masonry">
+      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=400">
+    </div>
+  </section>
+
+  <!-- ═══════════════ CINEMATIC VIDEO ═══════════════ -->
+  <section style="background: #1A0D12;">
+    <h2 class="section-title" style="color:#F0DA7B;">Cinematic Teaser</h2>
+    <div style="position:relative; padding-bottom:56.25%; height:0; max-width:850px; margin:0 auto; border-radius:2rem; overflow:hidden; box-shadow:0 30px 50px rgba(0,0,0,0.4);">
+      <iframe src="https://www.youtube.com/embed/ScMzIvxBSi4" style="position:absolute; top:0; left:0; width:100%; height:100%;" allowfullscreen title="Wedding Teaser"></iframe>
+    </div>
+  </section>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="luxury-footer">
+    <p class="footer-names">Ananya & Arjun</p>
+    <p class="footer-venue"><i class="fas fa-map-marker-alt"></i> Taj Falaknuma Palace · Hyderabad</p>
+    <div class="footer-social">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-whatsapp"></i></a>
+      <a href="#"><i class="far fa-envelope"></i></a>
+    </div>
+    <p style="margin:1rem 0;">#AnanyaWedsArjun</p>
+    <div class="footer-bottom">
+      <p>© 2027 Sacred Union · Privacy Policy · Crafted with Love & Blessings</p>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      // ──────────────── COUNTDOWN ────────────────
+      const weddingDate = new Date('February 12, 2027 10:00:00').getTime();
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const gap = weddingDate - now;
+        if (gap < 0) {
+          document.getElementById('days').innerText = '00';
+          document.getElementById('hours').innerText = '00';
+          document.getElementById('minutes').innerText = '00';
+          document.getElementById('seconds').innerText = '00';
+          return;
+        }
+        document.getElementById('days').innerText = Math.floor(gap / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((gap % (86400000)) / (3600000));
+        document.getElementById('minutes').innerText = Math.floor((gap % 3600000) / 60000);
+        document.getElementById('seconds').innerText = Math.floor((gap % 60000) / 1000);
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // ──────────────── RSVP ────────────────
+      document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const success = document.getElementById('rsvpSuccess');
+        success.style.display = 'block';
+        this.reset();
+        setTimeout(() => { success.style.display = 'none'; }, 5000);
+      });
+
+      // ──────────────── MOBILE MENU ────────────────
+      const mobileBtn = document.getElementById('mobileMenuBtn');
+      const navLinks = document.getElementById('navLinks');
+      mobileBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navLinks.classList.remove('active'));
+      });
+
+      // ──────────────── PETALS CANVAS ────────────────
+      const canvas = document.getElementById('petals-canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      let petals = [];
+      function initPetals(count = 45) {
+        petals = [];
+        for (let i = 0; i < count; i++) {
+          petals.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height * -1.2,
+            size: Math.random() * 7 + 3.5,
+            speed: Math.random() * 1.4 + 0.6,
+            drift: Math.random() * 0.8 - 0.4,
+            opacity: Math.random() * 0.5 + 0.3,
+            color: `rgba(212,175,55,`
+          });
+        }
+      }
+      function drawPetals() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        petals.forEach(p => {
+          ctx.beginPath();
+          ctx.ellipse(p.x, p.y, p.size * 0.6, p.size * 1.1, 0, 0, Math.PI * 2);
+          ctx.fillStyle = p.color + p.opacity + ')';
+          ctx.fill();
+          p.y += p.speed;
+          p.x += Math.sin(p.y * 0.015) * 0.7;
+          if (p.y > canvas.height + 30) {
+            p.y = -20;
+            p.x = Math.random() * canvas.width;
+          }
+        });
+        requestAnimationFrame(drawPetals);
+      }
+      initPetals();
+      drawPetals();
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        initPetals();
+      });
+
+      // ──────────────── FLOATING PARTICLES ────────────────
+      const pCanvas = document.getElementById('particles-canvas');
+      const pCtx = pCanvas.getContext('2d');
+      pCanvas.width = window.innerWidth;
+      pCanvas.height = window.innerHeight;
+      let particles = [];
+      for (let i = 0; i < 35; i++) {
+        particles.push({
+          x: Math.random() * pCanvas.width,
+          y: Math.random() * pCanvas.height,
+          radius: Math.random() * 2.2 + 0.8,
+          speedY: Math.random() * 0.4 + 0.15,
+          opacity: Math.random() * 0.6 + 0.2
+        });
+      }
+      function animateParticles() {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        particles.forEach(p => {
+          pCtx.beginPath();
+          pCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          pCtx.fillStyle = `rgba(240, 218, 123, ${p.opacity})`;
+          pCtx.fill();
+          p.y -= p.speedY;
+          if (p.y < -10) {
+            p.y = pCanvas.height + 10;
+            p.x = Math.random() * pCanvas.width;
+          }
+        });
+        requestAnimationFrame(animateParticles);
+      }
+      animateParticles();
+      window.addEventListener('resize', () => {
+        pCanvas.width = window.innerWidth;
+        pCanvas.height = window.innerHeight;
+      });
+    })();
+  </script>
+</body>
+</html>
